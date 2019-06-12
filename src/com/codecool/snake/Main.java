@@ -1,11 +1,12 @@
 package com.codecool.snake;
 
-import com.codecool.snake.entities.snakes.Snake;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -26,13 +27,24 @@ public class Main extends Application {
         HBox hbox = new HBox();
         hbox.setStyle("-fx-background-color: #336699;");
 
+        Button restartButton = new Button();
+        restartButton.setText("Restart");
+        restartButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("restart button clicked");
+                game.restart();
+            }
+        });
+
         Label healthLabel = new Label("Health: ");
         Label healthValue = new Label(String.valueOf(Globals.getInstance().game.getSnake().getHealth()));
         Globals.getInstance().healthValue = healthValue;
-        hbox.getChildren().addAll(healthLabel, healthValue);
+        hbox.getChildren().addAll(healthLabel, healthValue, restartButton);
 
         setMargin(healthLabel, new Insets(5, 10, 5, 50));
         setMargin(healthValue, new Insets(5, 10, 5, 10));
+        setMargin(restartButton, new Insets(5, 10, 5, 300));
 
         pane.setTop(hbox);
         pane.setCenter(game);
