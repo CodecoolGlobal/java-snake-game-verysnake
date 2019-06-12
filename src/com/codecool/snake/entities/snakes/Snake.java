@@ -25,6 +25,10 @@ public class Snake implements Animatable {
         addPart(4);
     }
 
+    public int getHealth() {
+        return health;
+    }
+
     public void step() {
         SnakeControl turnDir = getUserInput();
         head.updateRotation(turnDir, speed);
@@ -55,6 +59,7 @@ public class Snake implements Animatable {
 
     public void changeHealth(int diff) {
         health += diff;
+        Globals.getInstance().healthValue.setText(String.valueOf(health));
     }
 
     private void checkForGameOverConditions() {
