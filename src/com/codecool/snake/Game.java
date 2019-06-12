@@ -9,13 +9,17 @@ import com.codecool.snake.entities.snakes.Snake;
 import com.codecool.snake.eventhandler.InputHandler;
 
 import com.sun.javafx.geom.Vec2d;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 
 public class Game extends Pane {
     private Snake snake = null;
     private GameTimer gameTimer = new GameTimer();
+    private Timeline timeline = new Timeline();
 
 
     public Game() {
@@ -29,7 +33,7 @@ public class Game extends Pane {
     public void init() {
         spawnSnake();
         spawnEnemies(4);
-        spawnPowerUps(5);
+        spawnPowerUps();
 
         GameLoop gameLoop = new GameLoop(snake);
         Globals.getInstance().setGameLoop(gameLoop);
@@ -67,8 +71,28 @@ public class Game extends Pane {
         }
     }
 
-    private void spawnPowerUps(int numberOfPowerUps) {
-        for(int i = 0; i < numberOfPowerUps; ++i) {new SimplePowerUp(); new SpeedUpPowerUp(); new SpeedDownPowerUp();}
+    public Timeline getTimeline() {
+        return timeline;
+    }
+
+    private void spawnPowerUps() {
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setAutoReverse(true);
+        KeyFrame simplePowerUp = new KeyFrame(
+                Duration.seconds(2),
+                ae -> {new SimplePowerUp();
+                });
+        KeyFrame speedUpPowerUp = new KeyFrame(
+                Duration.seconds(5),
+                ae -> {new SpeedUpPowerUp();
+                });
+        KeyFrame speedDownPowerUp = new KeyFrame(
+                Duration.seconds(8),
+                ae -> {new SpeedDownPowerUp();
+                });
+
+        timeline.getKeyFrames().addAll(simplePowerUp, speedUpPowerUp, speedDownPowerUp);
+        timeline.play();
     }
 
     private void setupInputHandling() {
