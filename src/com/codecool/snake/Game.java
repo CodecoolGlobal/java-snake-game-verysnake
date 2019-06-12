@@ -45,6 +45,10 @@ public class Game extends Pane {
         snake = new Snake(new Vec2d(500, 500));
     }
 
+    public Snake getSnake() {
+        return snake;
+    }
+
     private void spawnEnemies(int numberOfEnemies) {
         for(int i = 0; i < numberOfEnemies; ++i) new SimpleEnemy();
     }
