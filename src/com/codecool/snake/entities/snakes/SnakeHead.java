@@ -7,6 +7,8 @@ import com.codecool.snake.entities.Interactable;
 import com.codecool.snake.entities.enemies.Enemy;
 import com.codecool.snake.entities.powerups.SimplePowerUp;
 
+import com.codecool.snake.entities.powerups.SpeedDownPowerUp;
+import com.codecool.snake.entities.powerups.SpeedUpPowerUp;
 import com.sun.javafx.geom.Vec2d;
 import javafx.geometry.Point2D;
 
@@ -47,6 +49,27 @@ public class SnakeHead extends GameEntity implements Interactable {
         if(entity instanceof SimplePowerUp){
             System.out.println(getMessage());
             snake.addPart(4);
+        }
+        if (entity instanceof SpeedUpPowerUp) {
+            System.out.println(getMessage());
+            if (snake.getSpeed() < 3.0f) {
+                float newSpeed = snake.getSpeed() + 0.25f;
+                snake.setSpeed(newSpeed);
+                System.out.println("New speed: " + snake.getSpeed());
+
+            } else {
+                System.out.println("IMMA RUNNIN A ME MAXI SPEEDAH");
+            }
+        }
+        if (entity instanceof SpeedDownPowerUp) {
+            System.out.println(getMessage());
+            if (snake.getSpeed() > 1.0f) {
+                float newSpeed = snake.getSpeed() - 0.25f;
+                snake.setSpeed(newSpeed);
+                System.out.println("New speed: " + snake.getSpeed());
+            } else {
+                System.out.println("KENT MÚV ENI SLOVER");
+            }
         }
     }
 
