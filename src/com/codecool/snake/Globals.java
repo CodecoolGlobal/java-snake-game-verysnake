@@ -60,7 +60,7 @@ public class Globals {
 
     public void showPopup() {
         Text gameOver = new Text();
-        gameOver.setLabel ("No way, you loose the game! You had " + Globals.getInstance().game.getSnake().getHealth() + " health points.");
+        gameOver.setLabel ("No way, you loose the game! You gained " + Globals.getInstance().game.getSnake().getLength() + " scores.");
         Globals.getInstance().text = gameOver;
         gameOver.show(stage);
     }

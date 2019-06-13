@@ -29,6 +29,10 @@ public class Snake implements Animatable {
         return health;
     }
 
+    public int getLength() {
+        return body.getList().size();
+    }
+
     public void setHealth(int health) {
         this.health = health;
     }
