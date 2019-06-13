@@ -1,6 +1,5 @@
 package com.codecool.snake;
 
-import com.codecool.snake.entities.enemies.DarthEnemy;
 import com.codecool.snake.entities.technical.Text;
 import com.codecool.snake.entities.powerups.CodecoolPowerUp;
 import com.codecool.snake.resources.Resources;
@@ -22,7 +21,6 @@ public class Globals {
     public Label healthValue;
     public Stage stage;
     public CodecoolPowerUp codecoolPowerUp;
-    public DarthEnemy darthEnemy;
     private GameLoop gameLoop;
     private Resources resources;
     public Text text;

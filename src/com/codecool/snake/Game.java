@@ -20,8 +20,7 @@ import javafx.util.Duration;
 public class Game extends Pane {
     private Snake snake = null;
     private GameTimer gameTimer = new GameTimer();
-    private Timeline timeline = new Timeline();
-    private boolean restarted = false;
+    private Timeline timeline;
 
 
     public Game() {
@@ -34,9 +33,7 @@ public class Game extends Pane {
 
     public void init() {
         spawnSnake();
-        spawnEnemies(4);
-        spawnPowerUps();
-
+        setTimeline();
         GameLoop gameLoop = new GameLoop(snake);
         Globals.getInstance().setGameLoop(gameLoop);
         gameTimer.setup(gameLoop::step);
@@ -49,11 +46,12 @@ public class Game extends Pane {
     }
 
     public void restart() {
-        restarted = true;
         Globals.getInstance().stopGame();
         Globals.getInstance().game.getTimeline().stop();
         Globals.getInstance().codecoolPowerUp.getTimeline().stop();
-        Globals.getInstance().text.hide();
+        if (Globals.getInstance().game.snake.getHealth() <= 0 || Globals.getInstance().game.snake.getHead().isOutOfBounds()) {
+            Globals.getInstance().text.hide();
+        }
         Globals.getInstance().display.clear();
         System.out.println(Globals.getInstance().display.getObjectList().isEmpty());
         init();
@@ -71,22 +69,32 @@ public class Game extends Pane {
         return snake;
     }
 
-    private void spawnEnemies(int numberOfEnemies) {
-        for(int i = 0; i < numberOfEnemies; ++i) {
-            new SimpleEnemy();
-            new DarthEnemy();
-        }
+    private void setTimeline() {
+        timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        spawnEnemies(8);
+        spawnPowerUps();
+        timeline.play();
     }
 
     public Timeline getTimeline() {
         return timeline;
     }
 
-    private void spawnPowerUps() {
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.setAutoReverse(true);
-        KeyFrame simplePowerUp = new KeyFrame(
+    private void spawnEnemies(int numberOfEnemies) {
+        for(int i = 0; i < numberOfEnemies; ++i) {
+            new DarthEnemy();
+        }
+        KeyFrame simpleEnemy = new KeyFrame(
                 Duration.seconds(2),
+                ae -> {new SimpleEnemy();
+                });
+            timeline.getKeyFrames().add(simpleEnemy);
+    }
+
+    private void spawnPowerUps() {
+        KeyFrame simplePowerUp = new KeyFrame(
+                Duration.seconds(1),
                 ae -> {new SimplePowerUp();
                 });
         KeyFrame speedUpPowerUp = new KeyFrame(
@@ -98,13 +106,10 @@ public class Game extends Pane {
                 ae -> {new SpeedDownPowerUp();
                 });
         KeyFrame codecoolPowerUp = new KeyFrame(
-                Duration.seconds(2),
+                Duration.seconds(3),
                 ae -> {new CodecoolPowerUp().step();
                 });
-        if (!restarted) {
             timeline.getKeyFrames().addAll(simplePowerUp, speedUpPowerUp, speedDownPowerUp, codecoolPowerUp);
-        }
-        timeline.play();
     }
 
     private void setupInputHandling() {
