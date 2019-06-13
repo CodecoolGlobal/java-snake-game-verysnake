@@ -21,6 +21,7 @@ public class Game extends Pane {
     private Snake snake = null;
     private GameTimer gameTimer = new GameTimer();
     private Timeline timeline = new Timeline();
+    private boolean restarted = false;
 
 
     public Game() {
@@ -48,9 +49,11 @@ public class Game extends Pane {
     }
 
     public void restart() {
+        restarted = true;
+        Globals.getInstance().stopGame();
         Globals.getInstance().game.getTimeline().stop();
         Globals.getInstance().codecoolPowerUp.getTimeline().stop();
-        Globals.getInstance().stopGame();
+        Globals.getInstance().display.remove(Globals.getInstance().text);
         Globals.getInstance().display.clear();
         System.out.println(Globals.getInstance().display.getObjectList().isEmpty());
         init();
@@ -98,8 +101,9 @@ public class Game extends Pane {
                 Duration.seconds(2),
                 ae -> {new CodecoolPowerUp().step();
                 });
-
-        timeline.getKeyFrames().addAll(simplePowerUp, speedUpPowerUp, speedDownPowerUp, codecoolPowerUp);
+        if (!restarted) {
+            timeline.getKeyFrames().addAll(simplePowerUp, speedUpPowerUp, speedDownPowerUp, codecoolPowerUp);
+        }
         timeline.play();
     }
 

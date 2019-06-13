@@ -30,18 +30,14 @@ public class CodecoolPowerUp extends GameEntity implements Interactable {
         power = 5;
         setX(rnd.nextDouble() * Globals.WINDOW_WIDTH);
         setY(0);
-
+        Globals.getInstance().codecoolPowerUp = this;
     }
 
     public void step() {
-        if (isOutOfBounds()) {
-            destroy();
-        }
         timeline = new Timeline(new KeyFrame(Duration.seconds(3),
                 new KeyValue(this.layoutYProperty(), Globals.WINDOW_HEIGHT)));
         timeline.setCycleCount(1);
         timeline.play();
-        Globals.getInstance().codecoolPowerUp = this;
     }
 
     @Override

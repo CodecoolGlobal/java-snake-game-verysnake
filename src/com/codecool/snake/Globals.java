@@ -1,9 +1,13 @@
 package com.codecool.snake;
 
+import com.codecool.snake.entities.enemies.DarthEnemy;
+import com.codecool.snake.entities.technical.Text;
 import com.codecool.snake.entities.powerups.CodecoolPowerUp;
 import com.codecool.snake.resources.Resources;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.stage.Stage;
+
 
 
 // class for holding all static stuff
@@ -16,9 +20,12 @@ public class Globals {
     public Display display;
     public Game game;
     public Label healthValue;
+    public Stage stage;
     public CodecoolPowerUp codecoolPowerUp;
+    public DarthEnemy darthEnemy;
     private GameLoop gameLoop;
     private Resources resources;
+    public Text text;
 
 
     public static Globals getInstance() {
@@ -46,7 +53,14 @@ public class Globals {
 
     public void startGame() { gameLoop.start(); }
 
-    public void stopGame() { gameLoop.stop(); }
+    public void stopGame() {
+        gameLoop.stop();
+        display.clear();
+        Text gameOver = new Text();
+        gameOver.setLabel ("No way, you loose the game! You had " + Globals.getInstance().game.getSnake().getHealth() + " health points.");
+        Globals.getInstance().text = gameOver;
+        gameOver.show(stage);
+    }
 
     private Globals() {
         // singleton needs the class to have private constructor
