@@ -18,9 +18,24 @@ public class DarthEnemy extends Enemy implements Animatable, Interactable {
     public DarthEnemy() {
         super(20);
 
+        boolean positioned = false;
+
         setImage(Globals.getInstance().getImage("DarthEnemy"));
-        setX(rnd.nextDouble() * Globals.WINDOW_WIDTH);
-        setY(rnd.nextDouble() * Globals.WINDOW_HEIGHT);
+
+        double tryX = rnd.nextDouble() * Globals.WINDOW_WIDTH;
+        double tryY = rnd.nextDouble() * Globals.WINDOW_HEIGHT;
+
+        while (!positioned) {
+            if (480 < tryX && tryX < 520 && 480 < tryY && tryY < 520) {
+                tryX = rnd.nextDouble() * Globals.WINDOW_WIDTH;
+                tryY = rnd.nextDouble() * Globals.WINDOW_HEIGHT;
+            } else {
+                positioned = true;
+            }
+        }
+
+        setX(tryX);
+        setY(tryY);
 
         double direction = rnd.nextDouble() * 360;
         setRotate(direction);
