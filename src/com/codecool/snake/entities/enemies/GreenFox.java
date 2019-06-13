@@ -1,6 +1,7 @@
-package com.codecool.snake.entities.powerups;
+package com.codecool.snake.entities.enemies;
 
 import com.codecool.snake.Globals;
+import com.codecool.snake.entities.Animatable;
 import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.entities.Interactable;
 import com.codecool.snake.entities.snakes.SnakeHead;
@@ -11,27 +12,24 @@ import javafx.util.Duration;
 
 import java.util.Random;
 
-public class CodecoolPowerUp extends GameEntity implements Interactable {
+public class GreenFox extends Enemy implements Animatable, Interactable {
+
     private static Random rnd = new Random();
-    private final int power;
 
-    public int getPower() {
-        return power;
+    public GreenFox() {
+        super(100);
+        setImage(Globals.getInstance().getImage("GreenFoxEnemy"));
+        setX(0);
+        setY(rnd.nextDouble() * Globals.WINDOW_HEIGHT-100);
     }
 
-    public CodecoolPowerUp() {
-        setImage(Globals.getInstance().getImage("CodecoolLogo"));
-        power = 5;
-        setX(rnd.nextDouble() * Globals.WINDOW_WIDTH);
-        setY(0);
-    }
-
+    @Override
     public void step() {
         if (isOutOfBounds()) {
             destroy();
         }
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3),
-                new KeyValue(this.layoutYProperty(), Globals.WINDOW_HEIGHT)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1),
+                new KeyValue(this.layoutXProperty(), Globals.WINDOW_WIDTH + 500)));
         timeline.setCycleCount(1);
         timeline.play();
     }
@@ -46,6 +44,6 @@ public class CodecoolPowerUp extends GameEntity implements Interactable {
 
     @Override
     public String getMessage() {
-        return "Got Codecool power-up";
+        return (getDamage() + " damaged by GreenFox");
     }
 }

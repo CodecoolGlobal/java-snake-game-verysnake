@@ -2,6 +2,7 @@ package com.codecool.snake.entities.technical;
 
 import com.codecool.snake.entities.GameEntity;
 import javafx.scene.control.Label;
+import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
@@ -19,6 +20,8 @@ public class Text extends GameEntity {
     public void setLabel(String text) {
         this.label.setText(text);
         popup.getContent().add(label);
+        label.setStyle(" -fx-background-color: yellow;");
+        label.setFont(new Font("Cambria", 32));
     }
 
     public void show(Stage stage) {

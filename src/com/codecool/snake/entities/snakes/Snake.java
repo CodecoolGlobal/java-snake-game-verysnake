@@ -79,8 +79,6 @@ public class Snake implements Animatable {
             System.out.println("Game Over");
 
             Globals.getInstance().game.getTimeline().stop();
-            Globals.getInstance().codecoolPowerUp.getTimeline().stop();
-//            Globals.getInstance().darthEnemy.getTimeline().stop();
             Globals.getInstance().stopGame();
             Globals.getInstance().showPopup();
         }
