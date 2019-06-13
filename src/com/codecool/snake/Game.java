@@ -2,6 +2,7 @@ package com.codecool.snake;
 
 import com.codecool.snake.entities.enemies.DarthEnemy;
 import com.codecool.snake.entities.enemies.SimpleEnemy;
+import com.codecool.snake.entities.powerups.CodecoolPowerUp;
 import com.codecool.snake.entities.powerups.SimplePowerUp;
 import com.codecool.snake.entities.powerups.SpeedDownPowerUp;
 import com.codecool.snake.entities.powerups.SpeedUpPowerUp;
@@ -20,6 +21,7 @@ public class Game extends Pane {
     private Snake snake = null;
     private GameTimer gameTimer = new GameTimer();
     private Timeline timeline = new Timeline();
+    private boolean restarted = false;
 
 
     public Game() {
@@ -47,8 +49,13 @@ public class Game extends Pane {
     }
 
     public void restart() {
+        restarted = true;
         Globals.getInstance().stopGame();
+        Globals.getInstance().game.getTimeline().stop();
+        Globals.getInstance().codecoolPowerUp.getTimeline().stop();
+        Globals.getInstance().text.hide();
         Globals.getInstance().display.clear();
+        System.out.println(Globals.getInstance().display.getObjectList().isEmpty());
         init();
         Globals.getInstance().game.getSnake().setHealth(100);
         Globals.getInstance().healthValue.setText(String.valueOf( Globals.getInstance().game.getSnake().getHealth()));
@@ -90,8 +97,13 @@ public class Game extends Pane {
                 Duration.seconds(8),
                 ae -> {new SpeedDownPowerUp();
                 });
-
-        timeline.getKeyFrames().addAll(simplePowerUp, speedUpPowerUp, speedDownPowerUp);
+        KeyFrame codecoolPowerUp = new KeyFrame(
+                Duration.seconds(2),
+                ae -> {new CodecoolPowerUp().step();
+                });
+        if (!restarted) {
+            timeline.getKeyFrames().addAll(simplePowerUp, speedUpPowerUp, speedDownPowerUp, codecoolPowerUp);
+        }
         timeline.play();
     }
 
