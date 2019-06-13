@@ -44,6 +44,7 @@ public class Globals {
         resources.addImage("DarthEnemy", new Image("darthEnemy.png"));
         resources.addImage("CodecoolLogo", new Image("codecoolLogo.png"));
         resources.addImage("GreenFoxEnemy", new Image("greenFox.png"));
+        resources.addImage("Laser", new Image("laser.png"));
     }
 
     public Image getImage(String name) { return resources.getImage(name); }
