@@ -7,8 +7,8 @@ import com.codecool.snake.entities.Interactable;
 import com.codecool.snake.entities.snakes.SnakeHead;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
-import javafx.geometry.Point2D;
 import javafx.scene.shape.ArcTo;
+import javafx.scene.shape.ClosePath;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
@@ -17,7 +17,6 @@ import java.util.Random;
 
 public class DarthEnemy extends Enemy implements Animatable, Interactable {
 
-    private Point2D heading;
     private static Random rnd = new Random();
 
     public DarthEnemy() {
@@ -27,35 +26,30 @@ public class DarthEnemy extends Enemy implements Animatable, Interactable {
         setX(rnd.nextDouble() * Globals.WINDOW_WIDTH);
         setY(rnd.nextDouble() * Globals.WINDOW_HEIGHT);
 
-        Path path = new Path();
-        path.getElements().add(new MoveTo(getX(),getY()));
-        ArcTo arcTo1 = new ArcTo();
-        arcTo1.setRadiusX(30.0);
-        arcTo1.setRadiusY(30.0);
-        arcTo1.setX(getX());
-        arcTo1.setY(getY());
-        ArcTo arcTo2 = new ArcTo();
-        arcTo2.setRadiusX(30.0);
-        arcTo2.setRadiusY(30.0);
-        arcTo2.setX(getX());
-        arcTo2.setY(getY());
+        ArcTo arcTo = new ArcTo();
+        arcTo.setX(getX() - 60 + 1); // to simulate a full 360 degree celcius circle.
+        arcTo.setY(getY() - 60);
+        arcTo.setLargeArcFlag(true);
+        arcTo.setRadiusX(30);
+        arcTo.setRadiusY(30);
 
-        path.getElements().addAll(arcTo1, arcTo2);
+        Path path = new Path();
+        path.getElements().addAll(
+                new MoveTo(getX() - 60, getY() - 60),
+                arcTo,
+                new ClosePath());
+
         PathTransition pathTransition = new PathTransition();
         pathTransition.setDuration(Duration.millis(4000));
         pathTransition.setPath(path);
         pathTransition.setNode(this);
-        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        pathTransition.setOrientation(PathTransition.OrientationType.NONE);
         pathTransition.setCycleCount(Timeline.INDEFINITE);
-//        pathTransition.setAutoReverse(true);
         pathTransition.play();
-
-
     }
 
     @Override
     public void step() {
-
     }
 
     @Override
