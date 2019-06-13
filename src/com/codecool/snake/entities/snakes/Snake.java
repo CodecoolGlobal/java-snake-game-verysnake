@@ -72,6 +72,10 @@ public class Snake implements Animatable {
         }
     }
 
+    public int getHealth() {
+        return health;
+    }
+
     private GameEntity getLastPart() {
         GameEntity result = body.getLast();
 

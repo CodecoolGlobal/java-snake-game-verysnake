@@ -15,6 +15,8 @@ public class Main extends Application {
         Game game = new Game();
         Scene mainScene = new Scene(game, Globals.WINDOW_WIDTH, Globals.WINDOW_HEIGHT);
 
+        Globals.getInstance().stage = primaryStage;
+
         primaryStage.setTitle("Snake Game");
         primaryStage.setScene(mainScene);
         primaryStage.show();
