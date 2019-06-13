@@ -1,5 +1,6 @@
 package com.codecool.snake;
 
+import com.codecool.snake.entities.powerups.CodecoolPowerUp;
 import com.codecool.snake.resources.Resources;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -15,7 +16,7 @@ public class Globals {
     public Display display;
     public Game game;
     public Label healthValue;
-
+    public CodecoolPowerUp codecoolPowerUp;
     private GameLoop gameLoop;
     private Resources resources;
 
@@ -38,6 +39,7 @@ public class Globals {
         resources.addImage("PowerUpSun", new Image("powerup_sun.png"));
         resources.addImage("PowerUpCloud", new Image("powerup_cloud.png"));
         resources.addImage("DarthEnemy", new Image("darthEnemy.png"));
+        resources.addImage("CodecoolLogo", new Image("codecoolLogo.png"));
     }
 
     public Image getImage(String name) { return resources.getImage(name); }

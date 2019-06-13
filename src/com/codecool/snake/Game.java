@@ -2,6 +2,7 @@ package com.codecool.snake;
 
 import com.codecool.snake.entities.enemies.DarthEnemy;
 import com.codecool.snake.entities.enemies.SimpleEnemy;
+import com.codecool.snake.entities.powerups.CodecoolPowerUp;
 import com.codecool.snake.entities.powerups.SimplePowerUp;
 import com.codecool.snake.entities.powerups.SpeedDownPowerUp;
 import com.codecool.snake.entities.powerups.SpeedUpPowerUp;
@@ -47,8 +48,11 @@ public class Game extends Pane {
     }
 
     public void restart() {
+        Globals.getInstance().game.getTimeline().stop();
+        Globals.getInstance().codecoolPowerUp.getTimeline().stop();
         Globals.getInstance().stopGame();
         Globals.getInstance().display.clear();
+        System.out.println(Globals.getInstance().display.getObjectList().isEmpty());
         init();
         Globals.getInstance().game.getSnake().setHealth(100);
         Globals.getInstance().healthValue.setText(String.valueOf( Globals.getInstance().game.getSnake().getHealth()));
@@ -90,8 +94,12 @@ public class Game extends Pane {
                 Duration.seconds(8),
                 ae -> {new SpeedDownPowerUp();
                 });
+        KeyFrame codecoolPowerUp = new KeyFrame(
+                Duration.seconds(2),
+                ae -> {new CodecoolPowerUp().step();
+                });
 
-        timeline.getKeyFrames().addAll(simplePowerUp, speedUpPowerUp, speedDownPowerUp);
+        timeline.getKeyFrames().addAll(simplePowerUp, speedUpPowerUp, speedDownPowerUp, codecoolPowerUp);
         timeline.play();
     }
 
