@@ -69,10 +69,12 @@ public class Snake implements Animatable {
     private void checkForGameOverConditions() {
         if (head.isOutOfBounds() || health <= 0) {
             System.out.println("Game Over");
+
             Globals.getInstance().game.getTimeline().stop();
             Globals.getInstance().codecoolPowerUp.getTimeline().stop();
 //            Globals.getInstance().darthEnemy.getTimeline().stop();
             Globals.getInstance().stopGame();
+            Globals.getInstance().showPopup();
         }
     }
 

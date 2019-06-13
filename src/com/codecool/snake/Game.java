@@ -53,7 +53,7 @@ public class Game extends Pane {
         Globals.getInstance().stopGame();
         Globals.getInstance().game.getTimeline().stop();
         Globals.getInstance().codecoolPowerUp.getTimeline().stop();
-        Globals.getInstance().display.remove(Globals.getInstance().text);
+        Globals.getInstance().text.hide();
         Globals.getInstance().display.clear();
         System.out.println(Globals.getInstance().display.getObjectList().isEmpty());
         init();

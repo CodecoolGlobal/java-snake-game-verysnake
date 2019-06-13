@@ -56,6 +56,9 @@ public class Globals {
     public void stopGame() {
         gameLoop.stop();
         display.clear();
+    }
+
+    public void showPopup() {
         Text gameOver = new Text();
         gameOver.setLabel ("No way, you loose the game! You had " + Globals.getInstance().game.getSnake().getHealth() + " health points.");
         Globals.getInstance().text = gameOver;
