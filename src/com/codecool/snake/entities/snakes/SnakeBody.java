@@ -5,10 +5,13 @@ import com.codecool.snake.Globals;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import com.codecool.snake.entities.Interactable;
+import com.codecool.snake.entities.enemies.Enemy;
+import com.codecool.snake.entities.enemies.GreenFox;
 import com.sun.javafx.geom.Vec2d;
 
 
-public class SnakeBody extends GameEntity {
+public class SnakeBody extends GameEntity implements Interactable {
     private Queue<Vec2d> history = new LinkedList<>();
     private static final int historySize = 10;
 
@@ -23,10 +26,23 @@ public class SnakeBody extends GameEntity {
     }
 
     @Override
+    public void apply(GameEntity entity) {
+        if (entity instanceof GreenFox) {
+            System.out.println(getMessage());
+            Globals.getInstance().game.getSnake().changeHealth(-((Enemy) entity).getDamage());
+        }
+    }
+
+    @Override
     public void setPosition(Vec2d pos) {
         Vec2d currentPos = history.poll(); // remove the oldest item from the history
         setX(currentPos.x);
         setY(currentPos.y);
         history.add(pos); // add the parent's current position to the beginning of the history
+    }
+
+    @Override
+    public String getMessage() {
+        return "BODY vs GREENFOX";
     }
 }
