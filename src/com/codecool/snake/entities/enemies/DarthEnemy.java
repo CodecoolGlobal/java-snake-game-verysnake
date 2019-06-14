@@ -30,7 +30,7 @@ public class DarthEnemy extends Enemy implements Animatable, Interactable {
         double tryY = rnd.nextDouble() * Globals.WINDOW_HEIGHT;
 
         while (!positioned) {
-            if (480 < tryX && tryX < 520 && 480 < tryY && tryY < 520) {
+            if (480 < tryX && tryX < 520 && 480 < tryY && tryY < 520 || tryY < 100) {
                 tryX = rnd.nextDouble() * Globals.WINDOW_WIDTH;
                 tryY = rnd.nextDouble() * Globals.WINDOW_HEIGHT;
             } else {
